@@ -1,18 +1,18 @@
-var express = require('express');
-var router = express.Router();
-const db = require('../sql-connection/sql-connection');
-
+const express = require('express')
+const router = express.Router()
+const sqlConnection = require('../sql-connection/sql-connection')
 
 /* GET users listing. */
 router.get('/', (req, res, next) => {
 
-  res.send({
-    id: 0,
-    name: 'BENTO #1',
-    title: 'Makaron z truskawkami i serem'
-  });
+  // callback hell..........................
+  var processResponse = (response) => {
+    console.dir(response.recordset)
+    res.send(response.recordset)
+  }
 
-  db();
-});
+  sqlConnection.getBentoList(processResponse)
 
-module.exports = router;
+})
+
+module.exports = router

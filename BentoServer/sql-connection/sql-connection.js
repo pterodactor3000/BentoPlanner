@@ -1,8 +1,6 @@
 const sql = require('mssql/msnodesqlv8')
 
 const config = {
-  // user: 'DESKTOP-MKNCJET\\yarpe',
-  // password: '',
   server: 'localhost',
   database: 'BentoBase',
   driver: 'msnodesqlv8',
@@ -11,26 +9,34 @@ const config = {
   }
 }
 
+const connect = {
+  getBentoList: async (callback) => {
+      try {
+        const pool = new sql.ConnectionPool(config)
+        
+        pool.connect().then((err) => {
 
-const connect = async () => {
-    try {
+          const query = `select bento.Id as id
+            ,bento.Title as title
+            ,bento.Name as name
+            ,season.Name as season
+          from dbo.Bento as bento
+          join dbo.Season as season
+            on bento.Season_Id = season.Id`
 
-      const pool = new sql.ConnectionPool(config)
-      
-      pool.connect().then((err) => {
-
-        pool.request().query(`select * from dbo.Season`, (err, res) => {
-          if (err) {
-            console.dir(err)
-          } else {
-            console.dir(res)
-          }
+          pool.request().query(query, (err, res) => {
+            if (err) {
+              console.dir(err)
+            } else {
+              callback(res)
+            }
+          })
         })
-
-      })
-    } catch (err) {
-      console.dir(err)
-    }
+      } catch (err) {
+        console.dir(err)
+      }
   }
+}
+
   
 module.exports = connect
