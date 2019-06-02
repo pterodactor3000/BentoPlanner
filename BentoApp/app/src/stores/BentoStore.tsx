@@ -1,17 +1,21 @@
 import { observable, action, computed } from 'mobx'
 
 class BentoStore {
-  @observable
-  bentoList = []
+  @observable bentoList: any[] = []
 
   @action
   setBentoList = (list: any) => {
-    Object.assign(this.bentoList, list)
+    this.bentoList.push(...list)
   }
 
   @computed
   get count() {
-    return this.bentoList.length;
+    return this.bentoList.length
+  }
+
+  @computed
+  get list() {
+    return this.bentoList
   }
 }
 

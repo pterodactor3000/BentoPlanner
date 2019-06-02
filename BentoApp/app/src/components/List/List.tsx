@@ -1,28 +1,37 @@
 import React, { Component } from 'react'
-import ApiService from '../../services/ApiService'
+import { inject, observer } from 'mobx-react'
+import { ApiService } from '../../services/ApiService'
 
 // import './List.scss';
 
-export default class List extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      data: [{
-        name: 'CLICK IT'
-      }]
-    }
-    this.handleClick = this.handleClick.bind(this)
-  }
+@inject('BentoStore')
 
-  handleClick () {
-    // ApiService.get()
+@observer
+export default class List extends Component<{ BentoStore?: any; }> {
+  apiService: ApiService = new ApiService()
+
+  handleClick = (e: any) => {
+    e.preventDefault();
+    this.apiService.getBentoList().then((response) => {
+      this.props.BentoStore.setBentoList(response.data)
+    }).catch(err => {
+      console.log(err)
+    })
   }
 
   render() {
+    const { BentoStore } = this.props
+
     return (
       <div className='button__container'>
-        <button className='button' onClick={this.handleClick}>Click Me</button>
-        {/* <p>{this.state.data[0].name}</p> */}
+        
+        {BentoStore.count}
+
+        {BentoStore.list.map( (item: any, i: number) => <p key={i}> {item.name} </p> )}
+
+        <form>
+          <button className='button' onClick={(e) => this.handleClick(e)}>Click Me</button>
+        </form>
       </div>
     )
   }
