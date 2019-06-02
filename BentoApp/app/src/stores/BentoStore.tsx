@@ -5,6 +5,7 @@ class BentoStore {
 
   @action
   setBentoList = (list: any) => {
+    this.bentoList.splice(0)
     this.bentoList.push(...list)
   }
 

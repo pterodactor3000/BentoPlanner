@@ -7,7 +7,7 @@ router.get('/', (req, res, next) => {
 
   // callback hell..........................
   var processResponse = (response) => {
-    console.dir(response.recordset)
+    // console.dir(response.recordset)
     res.send(response.recordset)
   }
 
@@ -16,10 +16,10 @@ router.get('/', (req, res, next) => {
 })
 
 router.get('/:id', (req, res, next) => {
-  console.dir(req.params)
+  // console.dir(req.params)
   // callback hell..........................
   var processResponse = (response) => {
-    console.dir(response.recordset)
+    // console.dir(response.recordset)
     res.send(response.recordset)
   }
 
