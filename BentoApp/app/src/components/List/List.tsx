@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import axios from 'axios'
+import ApiService from '../../services/ApiService'
+
 // import './List.scss';
 
-class List extends Component {
-  constructor() {
-    super()
+export default class List extends Component {
+  constructor(props) {
+    super(props)
     this.state = {
       data: [{
         name: 'CLICK IT'
@@ -14,18 +15,15 @@ class List extends Component {
   }
 
   handleClick () {
-    axios.get('http://localhost:3000/bento')
-      .then(response => this.setState({data: response.data}))
+    // ApiService.get()
   }
 
   render() {
     return (
       <div className='button__container'>
         <button className='button' onClick={this.handleClick}>Click Me</button>
-        <p>{this.state.data[0].name}</p>
+        {/* <p>{this.state.data[0].name}</p> */}
       </div>
     )
   }
 }
-
-export default List

@@ -1,13 +1,13 @@
-import React from 'react';
+import React from 'react'
 import List from './components/List/List'
-import './App.scss';
+import './App.scss'
 
 function App() {
   return (
     <div className="App">
       <List />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

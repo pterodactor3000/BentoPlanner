@@ -15,4 +15,16 @@ router.get('/', (req, res, next) => {
 
 })
 
+router.get('/:id', (req, res, next) => {
+  console.dir(req.params)
+  // callback hell..........................
+  var processResponse = (response) => {
+    console.dir(response.recordset)
+    res.send(response.recordset)
+  }
+
+  sqlConnection.getBentoList(processResponse, req.params['id'])
+
+})
+
 module.exports = router
