@@ -1,0 +1,15 @@
+@import '../../default-styles/Variables.scss';
+
+.header {
+  height: 75px;
+  background-color: $base-color-cyan;
+
+  .title {
+    color: $base-font-color-for-cyan;
+    padding: 10px;
+    font-size: 20px;
+    align-self: center;
+  }
+}
+
+
