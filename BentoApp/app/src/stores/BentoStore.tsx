@@ -4,7 +4,7 @@ class BentoStore {
   @observable bentoList: any[] = []
 
   @action
-  setBentoList = (list: any) => {
+  setBentoList = (list: any[]) => {
     this.bentoList.splice(0)
     this.bentoList.push(...list)
   }
