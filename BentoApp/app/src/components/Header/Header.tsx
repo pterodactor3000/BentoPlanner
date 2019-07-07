@@ -4,11 +4,10 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
-import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import AddIcon from '@material-ui/icons/Add'
-import { Menu, MenuItem, ListItemIcon } from '@material-ui/core';
+import { Menu, MenuItem, ListItemIcon, Modal, Slide } from '@material-ui/core';
 import BentoForm from '../BentoForm/BentoForm';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -24,6 +23,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     gradient: {
       'background': 'linear-gradient(to right, #38ef7d, #11998e)'
+    },
+    modal: {
+      alignItems:'center', 
+      justifyContent:'center', 
+      display: 'flex'
+    },
+    modalContent: {
+      top: `25%`,
+      margin:'auto'
     }
   }),
 )
@@ -32,15 +40,22 @@ function Header() {
   const classes = useStyles();
   
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
-  let openModal = false;
+  const [open, setOpen] = React.useState(false)
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     setAnchorEl(event.currentTarget);
   }
 
   function handleClose() {
-    setAnchorEl(null);
-    openModal = true;
+    setAnchorEl(null)
+  }
+
+  function openModal() {
+    setOpen(true)
+  }
+
+  function closeModal() {
+    setOpen(false)
   }
 
   return (
@@ -55,18 +70,32 @@ function Header() {
             keepMounted
             open={Boolean(anchorEl)}
             onClose={handleClose}>
-            <MenuItem onClick={handleClose}>
+            <MenuItem onClick={openModal}>
               <ListItemIcon>
                 <AddIcon />
               </ListItemIcon>
               Dodaj bento
             </MenuItem>
-            <BentoForm show={openModal}/>
+
+            <Modal
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+              open={open}
+              onClose={closeModal}
+              className={classes.modal}>
+              <Slide direction="up" in={open} mountOnEnter unmountOnExit>
+                  
+                <div
+                  className={classes.modalContent}>
+                  <BentoForm/>
+                </div>
+              </Slide>
+            </Modal>
+
           </Menu>
           <Typography variant="h6" className={classes.title}>
             BentoPlanner
           </Typography>
-          <Button color="inherit">Login</Button>
         </Toolbar>
       </AppBar>
     </div>
