@@ -7,6 +7,8 @@ const logger = require('morgan');
 // get routes
 const indexRouter = require('./routes/index');
 const bentoRouter = require('./routes/bento');
+const unitsRouter = require('./routes/units');
+const seasonsRouter = require('./routes/seasons');
 
 const app = express();
 
@@ -30,6 +32,8 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/bento', bentoRouter);
+app.use('/units', unitsRouter);
+app.use('/seasons', seasonsRouter);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

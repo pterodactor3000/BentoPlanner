@@ -31,7 +31,7 @@ export default function(props: BentoTextFieldPropsModel) {
   // }
   const classes = useStyles()
 
-  const { disabled, type, id, label, value, defaultValue} = props
+  const { disabled, type, id, label, value, defaultValue, multiline } = props
 
   return (
     <TextField
@@ -43,6 +43,7 @@ export default function(props: BentoTextFieldPropsModel) {
       value={value}
       placeholder={defaultValue}
       margin="normal"
+      multiline={multiline}
     />
   )
 }

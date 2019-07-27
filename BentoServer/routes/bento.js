@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const sqlConnection = require('../sql-connection/sql-connection')
 
-/* GET users listing. */
+/* GET bento listing. */
 router.get('/', (req, res, next) => {
 
   // callback hell..........................

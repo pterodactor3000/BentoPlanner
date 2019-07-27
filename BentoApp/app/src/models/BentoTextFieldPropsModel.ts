@@ -6,4 +6,5 @@ export interface BentoTextFieldPropsModel {
   label: string
   defaultValue?: string
   value?: string
+  multiline?: boolean
 }
