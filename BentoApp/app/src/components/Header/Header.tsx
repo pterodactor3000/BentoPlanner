@@ -7,8 +7,8 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import AddIcon from '@material-ui/icons/Add'
-import { Menu, MenuItem, ListItemIcon, Modal, Slide } from '@material-ui/core';
-import BentoForm from '../BentoForm/BentoForm';
+import { Menu, MenuItem, ListItemIcon } from '@material-ui/core'
+import BentoDialog from '../BentoDialog/BentoDialog'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,33 +30,33 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex'
     },
     modalContent: {
-      top: `25%`,
-      margin:'auto'
     }
   }),
 )
 
 function Header() {
-  const classes = useStyles();
+  const classes = useStyles()
   
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null)
   const [open, setOpen] = React.useState(false)
 
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
-    setAnchorEl(event.currentTarget);
+    setAnchorEl(event.currentTarget)
   }
 
   function handleClose() {
     setAnchorEl(null)
   }
+  
+  const handleCloseDialog = (value: string) => {
+    setOpen(false)
+  }
 
   function openModal() {
     setOpen(true)
+    handleClose()
   }
 
-  function closeModal() {
-    setOpen(false)
-  }
 
   return (
     <div className={classes.root}>
@@ -76,27 +76,12 @@ function Header() {
               </ListItemIcon>
               Dodaj bento
             </MenuItem>
-
-            <Modal
-              aria-labelledby="simple-modal-title"
-              aria-describedby="simple-modal-description"
-              open={open}
-              onClose={closeModal}
-              className={classes.modal}>
-              <Slide direction="up" in={open} mountOnEnter unmountOnExit>
-                  
-                <div
-                  className={classes.modalContent}>
-                  <BentoForm/>
-                </div>
-              </Slide>
-            </Modal>
-
           </Menu>
           <Typography variant="h6" className={classes.title}>
             BentoPlanner
           </Typography>
         </Toolbar>
+        <BentoDialog open={open} onClose={handleCloseDialog}/>
       </AppBar>
     </div>
   )
