@@ -1,17 +1,16 @@
-export interface BentoAttributes {
-  id: number;
+import { IBaseModel, BaseModel } from "./BaseModel";
+
+export interface IBentoModel extends IBaseModel {
   title: string;
-  name: string;
   season: string;
 }
 
-export class BentoModel {
-  id: number;
+export class BentoModel extends BaseModel {
   title: string;
-  name: string;
   season: string;
 
-  constructor(value: BentoAttributes) {
+  constructor(value: IBentoModel) {
+    super(value)
     this.id = value.id;
     this.title = value.title;
     this.name = value.name;

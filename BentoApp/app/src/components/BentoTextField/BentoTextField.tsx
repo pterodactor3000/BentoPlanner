@@ -49,6 +49,7 @@ export default function(props: BentoTextFieldPropsModel) {
 
   const { disabled, type, id, label, value, defaultValue, multiline, withUnits } = props
 
+  // get from store!!!
   const units = service.getUnits()
 
   return (
