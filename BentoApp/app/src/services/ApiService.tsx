@@ -9,4 +9,12 @@ export class ApiService {
     return axios.get(`http://localhost:3000/bento/${id}`)
   }
 
+  getUnits = () => {
+    return axios.get(`http://localhost:3000/units`)
+  }
+
+  getSeasons = () => {
+    return axios.get(`http://localhost:3000/seasons`)
+  }
+
 }

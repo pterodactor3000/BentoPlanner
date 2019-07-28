@@ -1,14 +1,17 @@
 import React from 'react'
-import { Typography, Slide, Dialog, DialogTitle, DialogContent } from '@material-ui/core'
+import { Slide, Dialog, DialogTitle, DialogContent } from '@material-ui/core'
 import { TransitionProps } from '@material-ui/core/transitions'
 import { BentoDialogPropsModel } from '../../models/BentoDialogPropsModel'
-import BentoTextField from '../BentoTextField/BentoTextField';
-import { BentoTextFieldPropsModel } from '../../models/BentoTextFieldPropsModel';
+import BentoTextField from '../BentoTextField/BentoTextField'
+import { BentoTextFieldPropsModel } from '../../models/BentoTextFieldPropsModel'
+import { BentoFormService } from '../../services/BentoFormService'
 
 
 const Transition = React.forwardRef<unknown, TransitionProps>(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />
 })
+
+const service = new BentoFormService()
 
 function BentoDialog(props: BentoDialogPropsModel) {  
 
@@ -18,16 +21,7 @@ function BentoDialog(props: BentoDialogPropsModel) {
     onClose('')
   }
 
-  // const forms
-
-  const form: BentoTextFieldPropsModel = { 
-    disabled: false,
-    type: 'text',
-    id: 'bento-name',
-    label: 'Nazwa bento',
-    defaultValue: 'Wiosenna miska obfitości',
-    multiline: true
-  }
+  const forms: Array<BentoTextFieldPropsModel> = service.getBentoForm().textFields
 
   return (
     <Dialog
@@ -41,14 +35,14 @@ function BentoDialog(props: BentoDialogPropsModel) {
         Bento edytor
       </DialogTitle>
       <DialogContent>
-        <BentoTextField {...form} />
-          {/* {BentoStore.list.map( (item: any, i: number) => { 
-                return (
-                  <Bento key={i} bento={item.name} season={item.season}> </Bento>
-                )
-              }
-            )
-          } */}
+        {/* <BentoTextField {...form} /> */}
+        {forms.map( (item: any, i: number) => { 
+              return (
+                <BentoTextField key={i} {...item}> </BentoTextField>
+              )
+            }
+          )
+        }
       </DialogContent>
     </Dialog>
     )
