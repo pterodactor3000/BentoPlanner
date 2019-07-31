@@ -2,10 +2,13 @@ import React from 'react'
 
 import TextField from '@material-ui/core/TextField'
 import { makeStyles } from '@material-ui/styles'
-import { Theme, createStyles, InputLabel, Select, MenuItem } from '@material-ui/core'
+import { Theme, createStyles, InputLabel, Select, MenuItem, FormControl } from '@material-ui/core'
 import { BentoTextFieldPropsModel } from '../../models/BentoTextFieldPropsModel';
 import { values } from 'mobx';
 import { ApiService } from '../../services/ApiService';
+import { inject } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
+import { flexbox } from '@material-ui/system';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -14,7 +17,14 @@ const useStyles = makeStyles(() =>
       flexWrap: 'wrap',
     },
     textFieldWrapper: {
-      width: 400
+      minWidth: 600,
+      display: 'flex',
+      justifyContent: 'space-evenly',
+      alignItems: 'stretch'
+    },
+    textFieldDetails: {
+      justifyContent: 'space-evenly',
+      alignItems: 'stretch'
     },
     textField: {
       // marginLeft: theme.spacing(1),
@@ -41,34 +51,45 @@ const useStyles = makeStyles(() =>
 
 const service = new ApiService()
 
-export default function(props: BentoTextFieldPropsModel) {
-  // const handleChange = (name: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setValues({ ...values, [name]: event.target.value })
-  // }
+const BentoTextField = (props: BentoTextFieldPropsModel) => {
   const classes = useStyles()
 
   const { disabled, type, id, label, value, defaultValue, multiline, withUnits } = props
 
-  // get from store!!!
-  const units = service.getUnits()
-
   return (
     <div 
       className={classes.textFieldWrapper}>
-      <TextField
-        disabled={disabled}
-        id={id}
-        label={label}
-        type={type}
-        className={!withUnits ? classes.textField : classes.ingredientField}
-        value={value}
-        placeholder={defaultValue}
-        margin="normal"
-        multiline={multiline}
-      />
+      <FormControl>
+        <TextField
+          disabled={disabled}
+          id={id}
+          label={label}
+          type={type}
+          className={!withUnits ? classes.textField : classes.ingredientField}
+          value={value}
+          placeholder={defaultValue}
+          margin="normal"
+          multiline={multiline}
+        />
+      </FormControl>
+      <FormControl>
+        <InputLabel htmlFor="age-simple">Pora roku</InputLabel>
+        <Select
+          value={{}}
+          // onChange={handleChange}
+          inputProps={{
+            name: '',
+            id: '',
+          }}>
+          <MenuItem value={'kg'}> {'kilogram'} </MenuItem>
+          <MenuItem value={'g'}> {'gram'} </MenuItem>
+          <MenuItem value={'oz.'}> {'uncja'} </MenuItem>
+        </Select>
+      </FormControl>
       {
         withUnits && 
-        <div>
+        <div
+          className={classes.textFieldDetails}>
           <TextField
             disabled={disabled}
             id={`${id}-units`}
@@ -79,7 +100,7 @@ export default function(props: BentoTextFieldPropsModel) {
             placeholder="0"
             margin="normal"
           />
-          <InputLabel htmlFor="age-simple">Age</InputLabel>
+          <InputLabel htmlFor="age-simple">Jednostka</InputLabel>
           <Select
             value={{}}
             // onChange={handleChange}
@@ -87,17 +108,24 @@ export default function(props: BentoTextFieldPropsModel) {
               name: '',
               id: '',
             }}>
-            <MenuItem value={10}>Ten</MenuItem>
-            {/* {units.map( (item: any, i: number) => { 
-                  return (
-                    <Bento key={i} bento={item.name} season={item.season}> </Bento>
-                  )
-                }
-              )
-            } */}
+            <MenuItem value={'kg'}> {'kilogram'} </MenuItem>
+            <MenuItem value={'g'}> {'gram'} </MenuItem>
+            <MenuItem value={'oz.'}> {'uncja'} </MenuItem>
           </Select>
+          <TextField
+            disabled={disabled}
+            id={`${id}-kcal`}
+            label="Kalorie"
+            type="number"
+            className={classes.unitsField}
+            value={''}
+            placeholder="0"
+            margin="normal"
+          />
         </div>
       }
     </div>
   )
 }
+
+export default BentoTextField
